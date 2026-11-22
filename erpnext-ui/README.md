@@ -49,3 +49,15 @@ settings (`allow_cors`, `SameSite=None; Secure`) on the ERPNext site.
 - Doctype fields in `resources.ts` assume standard ERPNext/HRMS field names; adjust for customisations.
 - Dependencies were not installed or built in the environment that generated this, so run
   `npm install && npm run build` once to catch any type errors.
+
+## Deploy to a free cloud (dev / testing)
+
+1. **ERPNext backend must be public over HTTPS** (Frappe Cloud, or a VM with a domain).
+2. **Frontend:** import this repo in Vercel or Netlify, set the root directory to `erpnext-ui`,
+   build command `npm run build`, output `dist`.
+3. **Edit the proxy URL** in `vercel.json` or `netlify.toml`: replace `YOUR-ERPNEXT-SITE.example.com`
+   with your ERPNext site. The proxy keeps the browser on one origin so login cookies work.
+4. Every branch/PR then gets its own preview URL for testing.
+
+If you see "site not found", ERPNext is choosing the wrong site from the Host header (multi-site setups).
+A GitHub Actions workflow (`.github/workflows/erpnext-ui-ci.yml`) type-checks and builds on every change.

@@ -1,0 +1,21 @@
+name: erpnext-ui CI
+
+on:
+  push:
+    paths: ["erpnext-ui/**", ".github/workflows/erpnext-ui-ci.yml"]
+  pull_request:
+    paths: ["erpnext-ui/**", ".github/workflows/erpnext-ui-ci.yml"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: erpnext-ui
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install
+      - run: npm run build
